@@ -19,7 +19,7 @@ class People(Base):
     __tablename__ = 'people'
     id = Column(Integer, primary_key=True)
     names = Column(String(40), nullable=False)
-    room = Column(ForeignKey('Rooms.room_num'))
+    room = Column(ForeignKey('rooms.room_num'))
     date = Column(DateTime(), default=datetime.now())
 
 
