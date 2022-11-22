@@ -4,18 +4,7 @@ from sqlalchemy import func
 from db_main import People, Rooms, engine
 from schedule import run_pending, every 
 from faker import Faker
-from random import randint
-
-
-faker = Faker()
-names = [faker.name() for i in range(20)]
-# print(names)
-
-
-def gen():
-    session = Session(engine)
-    query = session.query(Rooms)
-    last_obj = query.fetch
+from random import randint, choice
 
 
 def fill_rooms(amount_of_rooms):
@@ -37,7 +26,19 @@ def fill_rooms(amount_of_rooms):
     return 'Success'
 
 def fill_people():
-    pass
+    session = Session(engine)
+    rooms = session.query(Rooms).all()
+    print(rooms)
+    people = []
+
+    faker = Faker()
+    names = [faker.name() for i in range(20)]
+    for room in rooms:
+        name = choice(names)
+        person_obj = People(names=name, room=room.room_num)
+        people.append(person_obj)
+    session.add_all(people)
+    session.commit()
 
 
 # def main():
