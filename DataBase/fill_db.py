@@ -16,7 +16,7 @@ def fill_rooms(amount_of_rooms):
         amount_of_bed = randint(1, 4)
         obj = Rooms(room_num=room_num, floor=floor, amount_of_bed=amount_of_bed)
         rooms.append(obj)
-    print(*rooms, sep='\n')
+    print(*rooms, '---------------------------', sep='\n')
     session.add_all(rooms)
     try:
         session.commit()
@@ -25,17 +25,21 @@ def fill_rooms(amount_of_rooms):
             print(room.room_num)
     return 'Success'
 
+
 def fill_people():
     session = Session(engine)
     rooms = session.query(Rooms).all()
-    print(rooms)
     people = []
-
     faker = Faker()
     names = [faker.name() for i in range(20)]
-    for room in rooms:
+
+    print(len(rooms))
+    for i in range(0, len(rooms), 2):
+        print(f"I: {i}")
+        room = rooms[i]
+        print(room.room_num)
         name = choice(names)
-        person_obj = People(names=name, room=room.room_num)
+        person_obj = People(names=name, room_num=room.room_num)
         people.append(person_obj)
     session.add_all(people)
     session.commit()

@@ -13,14 +13,16 @@ class Rooms(Base):
     room_num = Column(Integer, nullable=False, unique=True)
     floor = Column(Integer)
     amount_of_bed = Column(Integer, nullable=False)
+    person = relationship("People", back_populates='room')
 
 
 class People(Base):
     __tablename__ = 'people'
     id = Column(Integer, primary_key=True)
     names = Column(String(40), nullable=False)
-    room = Column(ForeignKey('rooms.room_num'))
+    room_num = Column(ForeignKey('rooms.room_num'))
     date = Column(DateTime(), default=datetime.now())
+    room = relationship("Rooms", back_populates='person')
 
 
 engine = create_engine('sqlite:///..//room.db')

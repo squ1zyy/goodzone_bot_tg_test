@@ -1,3 +1,4 @@
-from datetime import datetime
+from sqlalchemy.orm import Session
+from db_main import People, Rooms, engine
 
-print(datetime.now())
+session = Session(engine)
