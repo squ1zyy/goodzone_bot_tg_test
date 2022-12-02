@@ -17,7 +17,12 @@ def start(msg):
 
 @bot.message_handler(commands=['get_room'])
 def get_persons_in_room(msg):
-    room_num = int(msg.text.split()[1])
+    bot.send_message(msg.chat.id, text="Enter room num: ")
+    bot.register_next_step_handler(msg, get_person)
+
+
+def get_person(msg):
+    room_num = msg.text
     session = Session(engine)
     room = session.query(Rooms).filter(Rooms.room_num == room_num).first()
     if not room:
@@ -28,13 +33,14 @@ def get_persons_in_room(msg):
     for person in room.person:
         first_name = person.names.split()[0]
         last_name = person.names.split()[1]
-        bot.send_message(msg.chat.id, f'First name: {first_name} \nLast name: {last_name}')
-        bot.send_message(msg.chat.id, f'Amount of beds in room №{room_num}: {room.amount_of_bed}')
-        bot.register_next_step_handler(msg, msgg )
-        bot.send_message(msg.chat.id, f'Price of room №{room_num}: 1000$')
-
+        bot.send_message(msg.chat.id, f'Full name: {person.names}')
+    bot.send_message(msg.chat.id, f'Amount of beds in room №{room_num}: {room.amount_of_bed}\n Price of room №{room_num}: {room.price}')
     session.close()
 def msgg(msg, room_num):
+    pass
+
+@bot.message_handler(commands=['get_available_rooms'])
+def dawsf(msg):
     pass
 
 

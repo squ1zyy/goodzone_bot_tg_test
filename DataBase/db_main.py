@@ -14,6 +14,7 @@ class Rooms(Base):
     floor = Column(Integer)
     amount_of_bed = Column(Integer, nullable=False)
     person = relationship("People", back_populates='room')
+    price = Column(Integer)
 
 
 class People(Base):
