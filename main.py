@@ -23,6 +23,11 @@ def start(msg):
     bot.send_photo(msg.chat.id, get("https://planetofhotels.com/sites/default/files/atttaction-images/71765171.jpg").content)
 
 
+@bot.message_handler(commands=['help'])
+def hlp(msg):
+    bot.send_message(msg.chat.id, '❗ Чтобы посмотреть список комнат пропишите /list_rooms\n ❗ Чтобы проверить состояние комнаты пропишите /get_room [номер комнаты]\n')
+
+
 @bot.message_handler(commands=['list_rooms'])
 def list_rooms(msg):
     query = get_query(Rooms)
